@@ -12,5 +12,8 @@
 </head>
 <body>
 <h1>Calc Input JSP</h1>
+<form method="post" action="calc">
+    <button type="submit">SUBMIT</button>
+</form>
 </body>
 </html>
