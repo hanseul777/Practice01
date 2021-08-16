@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>Calc Input JSP</h1>
-<form method="post" action="calc">
+<form method="post" action="calc"> <!-- action은 생략가능 -->
     <button type="submit">SUBMIT</button>
 </form>
 </body>

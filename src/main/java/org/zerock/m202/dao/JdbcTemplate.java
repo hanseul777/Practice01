@@ -1,4 +1,4 @@
-package org.zerock.m2.dao;
+package org.zerock.m202.dao;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 
 @Log4j2
 //dao 패키지 안에서만 바라보기 때문에 public 생략
-public abstract class JdbcTemplate {
+abstract class JdbcTemplate {
 
     static{
         try {
