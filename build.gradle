@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'war'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.30-RC'
 }
 
 group 'org.zerock'
@@ -38,6 +39,7 @@ dependencies {
     testCompileClasspath group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+
 }
 
 test {
