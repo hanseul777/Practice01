@@ -4,6 +4,7 @@ import com.ibm.dtfj.corereaders.PageCache;
 import lombok.extern.log4j.Log4j2;
 import org.zerock.bitboard.dto.BoardDTO;
 import org.zerock.bitboard.dto.PageDTO;
+import org.zerock.bitboard.dto.PageMaker;
 import org.zerock.bitboard.service.BoardService;
 
 import javax.servlet.*;
@@ -51,12 +52,17 @@ public class BoardListCotroller extends HttpServlet {
         log.info("==============STEP 1==================");
         log.info(pageDTO);
 
-        //9. service를 호출
+        //9. service를 호출 / pageDTO던지면 dtoList나온다.
         List<BoardDTO> dtoList = BoardService.INSTANCE.getList(pageDTO);
-        log.info("==============STEP 2==================");
+
+        log.info("=========== step2 ============");
         log.info(dtoList);
 
+        request.setAttribute("dtoList",dtoList);
 
+        //10.pageMaker 가져오기
+        PageMaker pageMaker = new PageMaker(pageDTO.getPage(),pageDTO.getSize(),1230);
+        request.setAttribute("pageMaker",pageMaker);
 
         //1. 데이터 보낼 경로 설정
         request.getRequestDispatcher("/WEB-INF/board/list.jsp").forward(request,response);

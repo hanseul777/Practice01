@@ -41,10 +41,10 @@ public enum BoardDAO {
     //skip과 size에 대한 정의가 필요함 -> PageDTO생성
     //위에서 표현한 dto들의 묶음(한 줄)을 list로 만들어서 여러 줄을 표현 -> selectList
     //그냥 제한없이 표현하는게 아니라 페이징을 해서 표현 -> PageDTO를 매개변수로 설정
-    public List<BoardDTO> list(PageDTO pageDTO) throws RuntimeException{
+    public List<BoardDTO> list(PageDTO pageDTO) throws RuntimeException {
         List<BoardDTO> list = null;
         try (SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)){
-            list = session.selectOne(PREFIX+".list",pageDTO); // 한 개의 항목만 가져오면 selectOne
+            list = session.selectList(PREFIX+".list",pageDTO);
         }catch (Exception e) {
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
