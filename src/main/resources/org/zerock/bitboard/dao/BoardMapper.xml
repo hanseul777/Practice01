@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.bitboard.dao.BoardMapper"><!--namespace : 패키지명이랑 맞춰주기  namespace + id = 풀네임-->
+    <insert id="insert">
+        insert into board(title,content,writer)
+        values(#{title}, #{content}, #{writer}) <!--예전에는 (JdbcTemplate을 이용해서)직접 ?로 바꿨던 값들을 dto의 get메소드로 이용한다:#{}-->
+    </insert>
+
+    <select id="select" resultType="org.zerock.bitboard.dto.BoardDTO"><!--resultType : 조회한 값을 어떤타입으로 줄건지->select에 사용-->
+        select * from board where bno = ${bno}<!--값이 만약 하나라면 ${}안에 이름을 아무거나 지정해도 상관없음!-->
+    </select>
+
+    <select id="list" resultType="org.zerock.bitboard.dto.BoardDTO">
+        select * from board where bno > 0 order by bno desc limit #{skip},#{size}<!--skip과 size는 getter로 -->
+    </select>
+
+    <delete id="delete">
+        delete from board where bno = #{bno}
+    </delete>
+
+    <update id="update">
+        update board set title = #{title}, content = #{content}, updatedate = now()
+        where bno =#{bno}
+    </update>
+
+</mapper>
