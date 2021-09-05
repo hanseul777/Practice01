@@ -6,6 +6,9 @@
     <insert id="insert">
         insert into board(title,content,writer)
         values(#{title}, #{content}, #{writer}) <!--예전에는 (JdbcTemplate을 이용해서)직접 ?로 바꿨던 값들을 dto의 get메소드로 이용한다:#{}-->
+        <selectKey order="AFTER" resultType="int" keyProperty="bno"><!--keyProperty : 키값을 어디에 둘 것인-->
+            select last_insert_id()
+        </selectKey>
     </insert>
 
     <select id="select" resultType="org.zerock.bitboard.dto.BoardDTO"><!--resultType : 조회한 값을 어떤타입으로 줄건지->select에 사용-->
@@ -13,6 +16,7 @@
     </select>
 
     <select id="list" resultType="org.zerock.bitboard.dto.BoardDTO">
+        <!--파라미터가 skip과 size가 두 개 필요 -> 객체로 맞춰주는게 좋다 : PageDTO를 생성-->
         select * from board where bno > 0 order by bno desc limit #{skip},#{size}<!--skip과 size는 getter로 -->
     </select>
 
@@ -24,5 +28,22 @@
         update board set title = #{title}, content = #{content}, updatedate = now()
         where bno =#{bno}
     </update>
+
+    <!--페이징하기 위해 전체데이터를 카운트하는 쿼리를 추가-->
+    <!--페이징 : 데이터의 수가 많아질수록 효율이 떨어지기 때문에 필요한 데이터만 골라오기 위해 진행-->
+    <!--bno > 0 : index타게 하려고! fullscan X-->
+    <select id="selectCount" resultType="int">
+        select count (*)where bno > 0
+    </select>
+
+    <!-- 조회수 증가 쿼리 -->
+    <update id="updateViewCount">
+        update board set viewcount = viewcount +1 where bno = #{bno}
+    </update>
+
+    <insert id="insertAttach">
+        insert into attach (bno,fname,savename,imgyn)
+        values (#{bno},#{fname},#{savename},#{imgyn})
+    </insert>
 
 </mapper>
